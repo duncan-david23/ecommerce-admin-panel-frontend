@@ -40,6 +40,7 @@ const AddProduct = () => {
       product_sizes: selectedSizes,
       product_colors: selectedColors, 
       product_images: imgArr,
+      gender: gender,
       sales_price: (price - (price * (discount / 100))).toFixed(2),
       status: stock > 0 ? 'In Stock' : 'Out of Stock',
       skuid: `SKU${Math.floor(100000 + Math.random() * 900000)}`,
@@ -79,6 +80,7 @@ const AddProduct = () => {
     formData.append("sales_price", prod_data.sales_price);
     formData.append("product_discount", prod_data.product_discount);
     formData.append("product_discount_type", prod_data.product_discount_type);
+    formData.append("gender", prod_data.gender);
     formData.append("product_stock", prod_data.product_stock);
     formData.append("status", prod_data.status || "In Stock");
     formData.append(
@@ -110,7 +112,7 @@ const AddProduct = () => {
     if (selectedProduct) {
       // 🔄 Update existing product
       response = await axios.put(
-        `http://localhost:3001/api/ecommerce/products/${selectedProduct.id}`,
+        `http://192.168.100.126:3001/api/ecommerce/products/${selectedProduct.id}`,
         formData,
         {
           headers: {
@@ -122,7 +124,7 @@ const AddProduct = () => {
     } else {
       // 🆕 Create new product
       response = await axios.post(
-        "http://localhost:3001/api/ecommerce/products/add-product",
+        "http://192.168.100.126:3001/api/ecommerce/products/add-product",
         formData,
         {
           headers: {

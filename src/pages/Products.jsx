@@ -28,7 +28,7 @@ const Products = () => {
     const fetchProducts = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/ecommerce/products"
+          "http://192.168.100.126:3001/api/ecommerce/products"
         );
         setProducts(response.data.products);
       } catch (err) {
@@ -137,7 +137,7 @@ const notify = () => toast.success('Deleted successfully');
 
     const accessToken = session.access_token;
 
-    await axios.delete("http://localhost:3001/api/ecommerce/products", {
+    await axios.delete("http://192.168.100.126:3001/api/ecommerce/products", {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },

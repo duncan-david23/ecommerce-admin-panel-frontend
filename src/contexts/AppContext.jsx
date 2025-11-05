@@ -25,43 +25,51 @@ export const AppProvider = ({ children }) => {
    const [selectedPost, setSelectedPost] = useState(null);
    const [allProducts, setAllProducts] = useState([]);
    const [currency, setCurrency] = useState('USD');
+   const [profileName, setProfileName] = useState()
+   const [profileEmail, setProfileEmail] = useState()
+   const [profileImageUrl, setProfileImageUrl] = useState()
+   const [profilePhoneNumber, setProfilePhoneNumber] = useState()
 
 
 
 
-   // ✅ Fetch account settings when page loads
-  // useEffect(() => {
-  //   const fetchAccountSettings = async () => {
-  //     try {
-  //       const {
-  //         data: { session },
-  //       } = await supabase.auth.getSession();
+  //  ✅ Fetch account settings when page loads
+  useEffect(() => {
+    const fetchAccountSettings = async () => {
+      try {
+        const {
+          data: { session },
+        } = await supabase.auth.getSession();
 
-  //       if (!session) {
-  //         console.error("❌ No active session.");
-  //         return;
-  //       }
+        if (!session) {
+          console.error("❌ No active session.");
+          return;
+        }
 
-  //       const accessToken = session.access_token;
+        const accessToken = session.access_token;
 
-  //       const response = await axios.get(
-  //         "http://localhost:3001/api/account/account-settings",
-  //         {
-  //           headers: { Authorization: `Bearer ${accessToken}` },
-  //         }
-  //       );
-  //       if (response.data.data) {
-  //         setCurrency(response.data.data.currency || 'USD');
+        const response = await axios.get(
+          "http://192.168.100.126:3001/api/settings/account-settings",
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
 
-  //       }
-       
-  //     } catch (error) {
-  //       console.error("❌ Error fetching account settings:", error);
-  //     }
-  //   };
+        if (response.data.data) {
 
-  //   fetchAccountSettings();
-  // }, []);
+          setProfileEmail(response.data.data.email);
+          setProfileName(response.data.data.display_name);
+          setProfileImageUrl(response.data.data.profile_image_url)
+
+        }
+      } catch (error) {
+        console.error("❌ Error fetching account settings:", error);
+      }
+    };
+
+    fetchAccountSettings();
+  }, []);
+
 
 
 
@@ -87,7 +95,10 @@ export const AppProvider = ({ children }) => {
     allProducts, setAllProducts,
     showAddPost, setShowAddPost,
     selectedPost, setSelectedPost,
-    currency, setCurrency
+    currency, setCurrency,
+    profileEmail, setProfileEmail,
+    profileName, setProfileName,
+    profileImageUrl, setProfileImageUrl
   };
 
   return (

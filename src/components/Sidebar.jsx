@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { supabase } from '../utils/supabase'
+import { useAppContext } from '../contexts/AppContext'
 
 const Sidebar = () => {
     const [isMobileOpen, setIsMobileOpen] = useState(false)
+    const {profileName, profileEmail, profileImageUrl} = useAppContext()
 
     const menuItems = [
         { name: 'Dashboard', path: '/dashboard', icon:<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="size-5">
@@ -57,6 +59,7 @@ const Sidebar = () => {
         }
     };
 
+
   return (
     <>
       {/* Mobile Toggle Button - Only shows when sidebar is closed */}
@@ -83,13 +86,13 @@ const Sidebar = () => {
         <div className='flex items-center justify-between'>
           <div className='flex items-center gap-2.5'>
             <img 
-              src="https://www.kindpng.com/picc/m/9-98985_40-hidden-messages-in-famous-company-logos-beats.png" 
+              src={profileImageUrl} 
               alt="" 
               className='rounded-full w-10 h-10' 
             />
             <div className="lg:block">
-              <span className='text-sm'>@jerneses</span>
-              <p className='text-xs text-gray-500'>Admin</p>
+              <span className='text-sm'>{profileEmail&& profileEmail}</span>
+              <p className='text-xs text-gray-500'>{profileName}</p>
             </div>
           </div>
           
